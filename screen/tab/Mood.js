@@ -10,11 +10,26 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import MainLayout from '../../component/Loyout/MainLayout';
 import {mood} from '../../data/mood';
+import { MoodLoading } from '../stack';
 
-const Mood = () => {
+const Mood = ({navigation}) => {
   const [selectedMood, setSelectedMood] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const selectedAnimal = mood.find(animal => animal.id === selectedMood);
+
+  const handleContinue = () => {
+
+    setIsLoading(true);
+    setTimeout(() => {
+      navigation.navigate('SelectedMoodTask');
+      setIsLoading(false);
+    }, 1500);
+  };
+
+  if (isLoading) {
+    return <MoodLoading />;
+  }
 
   return (
     <MainLayout>
@@ -53,6 +68,7 @@ const Mood = () => {
 
         {selectedMood && (
           <Pressable 
+            onPress={handleContinue}
             style={({pressed}) => [
               styles.pressable,
               {transform: [{scale: pressed ? 0.95 : 1}]}
