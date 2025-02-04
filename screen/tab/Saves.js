@@ -1,18 +1,34 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, Pressable, Image, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Image,
+  ScrollView,
+} from 'react-native';
 import {useAppContext} from '../../store/context';
 import MainLayout from '../../component/Loyout/MainLayout';
 
 const Saves = () => {
   const [activeTab, setActiveTab] = useState('tasks'); // 'tasks' or 'quotes'
-  const {favoriteTasks, favoriteQuotes} = useAppContext();
+  const {favoriteTasks, favoriteQuotes, saveFavoriteTask, saveFavoriteQuote} =
+    useAppContext();
 
-  const renderTaskCard = (task) => (
+  const handleToggleBookmark = async (item, type) => {
+    if (type === 'task') {
+      await saveFavoriteTask(item); // Will remove since it already exists
+    } else {
+      await saveFavoriteQuote(item); // Will remove since it already exists
+    }
+  };
+
+  const renderTaskCard = task => (
     <View key={task.id} style={styles.card}>
       <Text style={styles.cardTitle}>Daily Task for Self-Improvement:</Text>
       <Text style={styles.cardText}>{task.task}</Text>
       <View style={styles.cardActions}>
-        <Pressable>
+        <Pressable onPress={() => handleToggleBookmark(task, 'task')}>
           <Image
             source={require('../../assets/image/icons/bookmark.png')}
             style={[styles.actionIcon, styles.bookmarked]}
@@ -28,13 +44,13 @@ const Saves = () => {
     </View>
   );
 
-  const renderQuoteCard = (quote) => (
+  const renderQuoteCard = quote => (
     <View key={quote.id} style={styles.card}>
       <Text style={styles.cardTitle}>Daily Quote:</Text>
       <Text style={styles.cardText}>{quote.quote}</Text>
       <Text style={styles.author}>- {quote.author}</Text>
       <View style={styles.cardActions}>
-        <Pressable>
+        <Pressable onPress={() => handleToggleBookmark(quote, 'quote')}>
           <Image
             source={require('../../assets/image/icons/bookmark.png')}
             style={[styles.actionIcon, styles.bookmarked]}
@@ -54,19 +70,27 @@ const Saves = () => {
     <MainLayout>
       <View style={styles.container}>
         <Text style={styles.title}>Saved:</Text>
-        
+
         <View style={styles.tabContainer}>
           <Pressable
             style={[styles.tab, activeTab === 'tasks' && styles.activeTab]}
             onPress={() => setActiveTab('tasks')}>
-            <Text style={[styles.tabText, activeTab === 'tasks' && styles.activeTabText]}>
+            <Text
+              style={[
+                styles.tabText,
+                activeTab === 'tasks' && styles.activeTabText,
+              ]}>
               Tasks
             </Text>
           </Pressable>
           <Pressable
             style={[styles.tab, activeTab === 'quotes' && styles.activeTab]}
             onPress={() => setActiveTab('quotes')}>
-            <Text style={[styles.tabText, activeTab === 'quotes' && styles.activeTabText]}>
+            <Text
+              style={[
+                styles.tabText,
+                activeTab === 'quotes' && styles.activeTabText,
+              ]}>
               Quotes
             </Text>
           </Pressable>
@@ -78,6 +102,7 @@ const Saves = () => {
             : favoriteQuotes.map(renderQuoteCard)}
         </ScrollView>
       </View>
+      <View style={{height: 80}} />
     </MainLayout>
   );
 };
@@ -86,6 +111,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    paddingTop: 60,
   },
   title: {
     fontSize: 24,
@@ -104,10 +130,11 @@ const styles = StyleSheet.create({
   },
   activeTab: {
     borderBottomColor: '#FF64FF',
+    borderBottomWidth: 3,
   },
   tabText: {
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 20,
     color: '#666',
   },
   activeTabText: {

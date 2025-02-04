@@ -1,12 +1,12 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Mood, Saves, Statistics} from '../tab';
+import {Mood, Saves, Statistics, Sound} from '../tab';
 
 const Tab = createBottomTabNavigator();
 
 const TabMenuNav = () => {
   return (
-    <Tab.Navigator 
+    <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
           backgroundColor: 'white',
@@ -23,21 +23,21 @@ const TabMenuNav = () => {
         tabBarShowLabel: false,
         headerShown: false,
       }}>
-          <Tab.Screen
-            name="Mood"
-            component={Mood}
-            options={{
-              tabBarIcon: ({focused}) => (
-                <Image
-                  source={require('../../assets/image/tabBar/mood.png')}
-                  style={[
-                    styles.tabIcon,
-                    {tintColor: focused ? '#FF64FF' : '#666'},
-                  ]}
-                />
-              ),
-            }}
-          />
+      <Tab.Screen
+        name="Mood"
+        component={Mood}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <Image
+              source={require('../../assets/image/tabBar/mood.png')}
+              style={[
+                styles.tabIcon,
+                {tintColor: focused ? '#FF64FF' : '#666'},
+              ]}
+            />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Statistics"
         component={Statistics}
@@ -68,10 +68,24 @@ const TabMenuNav = () => {
           ),
         }}
       />
+      <Tab.Screen
+        name="Sound"
+        component={Sound}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <Image
+              source={require('../../assets/image/tabBar/sound.png')}
+              style={[
+                styles.tabIcon,
+                {tintColor: focused ? '#FF64FF' : '#666'},
+              ]}
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
-
 export default TabMenuNav;
 
 const styles = StyleSheet.create({

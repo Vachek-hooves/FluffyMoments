@@ -1,8 +1,9 @@
-import React from 'react';
+
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import MainLayout from '../../component/Loyout/MainLayout';
 import {useAppContext} from '../../store/context';
 import {Image} from 'react-native';
+
 
 const Statistics = () => {
   const {moodHistory} = useAppContext();
@@ -96,6 +97,8 @@ const Statistics = () => {
           ))}
         </View>
       </ScrollView>
+        <View style={{height: 100}} />
+      
     </MainLayout>
   );
 };

@@ -78,6 +78,7 @@ const Mood = ({navigation}) => {
             </LinearGradient>
           </Pressable>
         )}
+        <View style={{height: 110}} />
       </ScrollView>
     </MainLayout>
   );
