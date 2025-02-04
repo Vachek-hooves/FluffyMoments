@@ -6,6 +6,7 @@ import {
   Image,
   Pressable,
   ScrollView,
+  Vibration,
 } from 'react-native';
 import MainLayout from '../../component/Loyout/MainLayout';
 import {mood} from '../../data/mood';
@@ -28,8 +29,12 @@ const SelectedMoodTask = ({route, navigation}) => {
     } else if (timeLeft === 0) {
       setIsDone(true);
       setIsActive(false);
+      Vibration.vibrate([0, 500, 200, 500]);
     }
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      Vibration.cancel();
+    };
   }, [isActive, timeLeft]);
 
   const startTimer = () => {
