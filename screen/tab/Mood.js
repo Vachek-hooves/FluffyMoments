@@ -7,11 +7,14 @@ import {
   Pressable,
   ScrollView,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import MainLayout from '../../component/Loyout/MainLayout';
 import {mood} from '../../data/mood';
 
 const Mood = () => {
   const [selectedMood, setSelectedMood] = useState(null);
+
+  const selectedAnimal = mood.find(animal => animal.id === selectedMood);
 
   return (
     <MainLayout>
@@ -47,6 +50,22 @@ const Mood = () => {
             </Pressable>
           ))}
         </View>
+
+        {selectedMood && (
+          <Pressable 
+            style={({pressed}) => [
+              styles.pressable,
+              {transform: [{scale: pressed ? 0.95 : 1}]}
+            ]}>
+            <LinearGradient
+              colors={['#FF64FF', '#D45579']}
+              style={styles.buttonContainer}>
+              <Text style={styles.buttonText}>
+                Continue with {selectedAnimal?.name?.split(' ')[1]}
+              </Text>
+            </LinearGradient>
+          </Pressable>
+        )}
       </ScrollView>
     </MainLayout>
   );
@@ -95,8 +114,8 @@ const styles = StyleSheet.create({
     borderColor: '#822E46',
   },
   imageContainer: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     marginBottom: 10,
   },
   animalImage: {
@@ -118,5 +137,21 @@ const styles = StyleSheet.create({
   appName: {
     width: '100%',
     resizeMode: 'contain',
+  },
+  pressable: {
+    width: '100%',
+    marginTop: 30,
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    borderRadius: 25,
+    alignItems: 'center',
+  },
+  buttonText: {
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
