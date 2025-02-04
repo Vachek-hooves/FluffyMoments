@@ -1,18 +1,31 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, Pressable, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  ScrollView,
+} from 'react-native';
 import MainLayout from '../../component/Loyout/MainLayout';
-import { mood } from '../../data/mood';
+import {mood} from '../../data/mood';
 
 const Mood = () => {
   return (
     <MainLayout>
       <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.header}>
+          <Image
+            source={require('../../assets/image/appName/appName.png')}
+            style={styles.appName}
+          />
+        </View>
         <Text style={styles.title}>Choose Your Fluffy Friend</Text>
         <Text style={styles.subtitle}>
           Select a companion to guide your day's journey
         </Text>
         <View style={styles.grid}>
-          {mood.map((animal) => (
+          {mood.map(animal => (
             <Pressable
               key={animal.id}
               style={({pressed}) => [
@@ -37,6 +50,7 @@ export default Mood;
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    paddingTop: 40,
   },
   title: {
     fontSize: 24,
@@ -86,5 +100,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     textAlign: 'center',
+  },
+  appName: {
+    width: '100%',
+    resizeMode: 'contain',
   },
 });
