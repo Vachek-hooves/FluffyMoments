@@ -6,7 +6,7 @@ const Tab = createBottomTabNavigator();
 
 const TabMenuNav = () => {
   return (
-    <Tab.Navigator
+    <Tab.Navigator 
       screenOptions={{
         tabBarStyle: {
           backgroundColor: 'white',
@@ -21,7 +21,23 @@ const TabMenuNav = () => {
           marginHorizontal: 40,
         },
         tabBarShowLabel: false,
+        headerShown: false,
       }}>
+          <Tab.Screen
+            name="Mood"
+            component={Mood}
+            options={{
+              tabBarIcon: ({focused}) => (
+                <Image
+                  source={require('../../assets/image/tabBar/mood.png')}
+                  style={[
+                    styles.tabIcon,
+                    {tintColor: focused ? '#FF64FF' : '#666'},
+                  ]}
+                />
+              ),
+            }}
+          />
       <Tab.Screen
         name="Statistics"
         component={Statistics}
@@ -29,21 +45,6 @@ const TabMenuNav = () => {
           tabBarIcon: ({focused}) => (
             <Image
               source={require('../../assets/image/tabBar/statistics.png')}
-              style={[
-                styles.tabIcon,
-                {tintColor: focused ? '#FF64FF' : '#666'},
-              ]}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Mood"
-        component={Mood}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <Image
-              source={require('../../assets/image/tabBar/mood.png')}
               style={[
                 styles.tabIcon,
                 {tintColor: focused ? '#FF64FF' : '#666'},

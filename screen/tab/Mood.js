@@ -1,14 +1,90 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from 'react';
+import {StyleSheet, Text, View, Image, Pressable, ScrollView} from 'react-native';
+import MainLayout from '../../component/Loyout/MainLayout';
+import { mood } from '../../data/mood';
 
 const Mood = () => {
   return (
-    <View>
-      <Text>Mood</Text>
-    </View>
-  )
-}
+    <MainLayout>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.title}>Choose Your Fluffy Friend</Text>
+        <Text style={styles.subtitle}>
+          Select a companion to guide your day's journey
+        </Text>
+        <View style={styles.grid}>
+          {mood.map((animal) => (
+            <Pressable
+              key={animal.id}
+              style={({pressed}) => [
+                styles.animalCard,
+                {transform: [{scale: pressed ? 0.95 : 1}]},
+              ]}>
+              <View style={styles.imageContainer}>
+                <Image source={animal.image} style={styles.animalImage} />
+              </View>
+              <Text style={styles.animalName}>{animal.name}</Text>
+              <Text style={styles.animalTrait}>{animal.trait}</Text>
+            </Pressable>
+          ))}
+        </View>
+      </ScrollView>
+    </MainLayout>
+  );
+};
 
-export default Mood
+export default Mood;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#80213C',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 20,
+  },
+  animalCard: {
+    width: '47%',
+    backgroundColor: '#FFC1FF',
+    borderRadius: 20,
+    padding: 15,
+    alignItems: 'center',
+    borderTopWidth: 3,
+    borderTopColor: '#822E46',
+  },
+  imageContainer: {
+    width: 100,
+    height: 100,
+    marginBottom: 10,
+  },
+  animalImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  animalName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#80213C',
+    marginBottom: 5,
+  },
+  animalTrait: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
+  },
+});
