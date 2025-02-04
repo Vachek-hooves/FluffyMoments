@@ -11,11 +11,14 @@ import {
 import MainLayout from '../../component/Loyout/MainLayout';
 import {mood} from '../../data/mood';
 import LinearGradient from 'react-native-linear-gradient';
+import {useAppContext} from '../../store/context';
 
 const SelectedMoodTask = ({route, navigation}) => {
   const [timeLeft, setTimeLeft] = useState(30); // 5 minutes in seconds
   const [isActive, setIsActive] = useState(false);
   const [isDone, setIsDone] = useState(false);
+  const {saveFavoriteTask, saveFavoriteQuote, isFavorite} = useAppContext();
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   const selectedMoodId = route.params?.selectedMoodId;
   const selectedAnimal = mood.find(animal => animal.id === selectedMoodId);
@@ -37,6 +40,11 @@ const SelectedMoodTask = ({route, navigation}) => {
     };
   }, [isActive, timeLeft]);
 
+  useEffect(() => {
+    // Check if task/quote is already favorited
+    setIsBookmarked(isFavorite(selectedAnimal.id, isDone ? 'quote' : 'task'));
+  }, [isDone, selectedAnimal.id]);
+
   const startTimer = () => {
     setIsActive(true);
   };
@@ -55,8 +63,33 @@ const SelectedMoodTask = ({route, navigation}) => {
       taskCompleted: true,
       taskDuration: 300 - timeLeft, // Time spent on task in seconds
     };
-    
+
     navigation.navigate('TrackMood', taskData);
+  };
+
+  const handleBookmark = async () => {
+    if (isDone) {
+      // Save quote
+      const quoteData = {
+        id: selectedAnimal.id,
+        quote: selectedAnimal.dailyQuote,
+        author: selectedAnimal.author,
+        animalName: selectedAnimal.name,
+        savedAt: new Date().toISOString(),
+      };
+      const result = await saveFavoriteQuote(quoteData);
+      setIsBookmarked(result.action === 'added');
+    } else {
+      // Save task
+      const taskData = {
+        id: selectedAnimal.id,
+        task: selectedAnimal.dailyTask,
+        animalName: selectedAnimal.name,
+        savedAt: new Date().toISOString(),
+      };
+      const result = await saveFavoriteTask(taskData);
+      setIsBookmarked(result.action === 'added');
+    }
   };
 
   const formatTime = seconds => {
@@ -110,7 +143,7 @@ const SelectedMoodTask = ({route, navigation}) => {
             {isDone ? (
               <>
                 <Text style={styles.taskDescription}>
-                 " {selectedAnimal?.dailyQuote}
+                  " {selectedAnimal?.dailyQuote}
                 </Text>
                 <Text style={styles.author}>- {selectedAnimal?.author}</Text>
               </>
@@ -131,16 +164,24 @@ const SelectedMoodTask = ({route, navigation}) => {
               ]}>
               <LinearGradient
                 colors={['#FF64FF', '#D45579']}
-                style={[styles.gradientButton, isActive && styles.disabledButton]}>
+                style={[
+                  styles.gradientButton,
+                  isActive && styles.disabledButton,
+                ]}>
                 <Text style={styles.buttonText}>{getButtonText()}</Text>
               </LinearGradient>
             </Pressable>
 
             <View style={styles.iconButtons}>
-              <Pressable style={styles.iconButton}>
+              <Pressable
+                style={[
+                  styles.iconButton,
+                  isBookmarked && styles.bookmarkedButton,
+                ]}
+                onPress={handleBookmark}>
                 <Image
                   source={require('../../assets/image/icons/bookmark.png')}
-                  style={styles.icon}
+                  style={[styles.icon, isBookmarked && styles.bookmarkedIcon]}
                 />
               </Pressable>
               <Pressable style={styles.iconButton}>
@@ -284,5 +325,11 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     textAlign: 'right',
     marginTop: 10,
+  },
+  bookmarkedButton: {
+    backgroundColor: '#FFC1FF',
+  },
+  bookmarkedIcon: {
+    tintColor: '#FF64FF',
   },
 });
