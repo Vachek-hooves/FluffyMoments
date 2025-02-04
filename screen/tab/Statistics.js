@@ -1,7 +1,9 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {useAppContext} from '../../store/context';
 
 const Statistics = () => {
+  const {moodHistory} = useAppContext();
+  console.log(moodHistory);
   return (
     <View>
       <Text>Statistics</Text>

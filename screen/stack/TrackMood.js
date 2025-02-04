@@ -9,10 +9,12 @@ import {
 } from 'react-native';
 import MainLayout from '../../component/Loyout/MainLayout';
 import LinearGradient from 'react-native-linear-gradient';
+import { useAppContext } from '../../store/context';
 
 const TrackMood = ({route, navigation}) => {
   const [selectedMood, setSelectedMood] = useState(null);
   const [description, setDescription] = useState('');
+  const { saveMoodData } = useAppContext();
 
   // Get data passed from SelectedMoodTask
   const {selectedAnimal, completedAt, taskCompleted, taskDuration} = route.params || {};
@@ -23,7 +25,7 @@ const TrackMood = ({route, navigation}) => {
     {id: 'positive', icon: require('../../assets/image/icons/thumbsUp.png')},
   ];
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const moodData = {
       animal: selectedAnimal,
       completedAt: completedAt,
@@ -33,9 +35,17 @@ const TrackMood = ({route, navigation}) => {
       description: description,
     };
     
-    console.log('Saving mood data:', moodData);
-    // TODO: Save mood data
-    navigation.replace('TabMenuNav', {screen: 'Mood'});
+    try {
+      const success = await saveMoodData(moodData);
+      if (success) {
+        navigation.replace('TabMenuNav', {screen: 'Mood'});
+      } else {
+        // Handle save error - maybe show an alert
+        console.error('Failed to save mood data');
+      }
+    } catch (error) {
+      console.error('Error in handleSave:', error);
+    }
   };
 
   return (
