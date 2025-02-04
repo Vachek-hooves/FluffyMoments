@@ -42,7 +42,21 @@ const SelectedMoodTask = ({route, navigation}) => {
   };
 
   const handleDone = () => {
-    navigation.navigate('TrackMood');
+    const taskData = {
+      selectedAnimal: {
+        id: selectedAnimal.id,
+        name: selectedAnimal.name,
+        power: selectedAnimal.power,
+        dailyTask: selectedAnimal.dailyTask,
+        dailyQuote: selectedAnimal.dailyQuote,
+        author: selectedAnimal.author,
+      },
+      completedAt: new Date().toISOString(),
+      taskCompleted: true,
+      taskDuration: 300 - timeLeft, // Time spent on task in seconds
+    };
+    
+    navigation.navigate('TrackMood', taskData);
   };
 
   const formatTime = seconds => {

@@ -15,7 +15,7 @@ const TrackMood = ({route, navigation}) => {
   const [description, setDescription] = useState('');
 
   // Get data passed from SelectedMoodTask
-  const {selectedAnimal, completedAt, taskCompleted} = route.params || {};
+  const {selectedAnimal, completedAt, taskCompleted, taskDuration} = route.params || {};
 
   const moods = [
     {id: 'negative', icon: require('../../assets/image/icons/thumbsDown.png')},
@@ -26,14 +26,16 @@ const TrackMood = ({route, navigation}) => {
   const handleSave = () => {
     const moodData = {
       animal: selectedAnimal,
-      mood: selectedMood,
-      description: description,
       completedAt: completedAt,
       taskCompleted: taskCompleted,
+      taskDuration: taskDuration,
+      mood: selectedMood,
+      description: description,
     };
-    console.log(moodData);
+    
+    console.log('Saving mood data:', moodData);
     // TODO: Save mood data
-    navigation.navigate('TabMenuNav', {screen: 'Mode'}); // or wherever you want to navigate after saving
+    navigation.replace('TabMenuNav', {screen: 'Mood'});
   };
 
   return (
