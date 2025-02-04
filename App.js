@@ -1,7 +1,12 @@
 import {StoreProvider} from './store/context';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {MoodLoading, SelectedMoodTask, Welcome} from './screen/stack';
+import {
+  MoodLoading,
+  SelectedMoodTask,
+  TrackMood,
+  Welcome,
+} from './screen/stack';
 import TabMenuNav from './screen/menu/TabMenuNav';
 import Introduction from './screen/stack/Introduction';
 
@@ -17,6 +22,7 @@ function App() {
           <Stack.Screen name="TabMenuNav" component={TabMenuNav} />
           <Stack.Screen name="MoodLoading" component={MoodLoading} />
           <Stack.Screen name="SelectedMoodTask" component={SelectedMoodTask} />
+          <Stack.Screen name="TrackMood" component={TrackMood} />
         </Stack.Navigator>
       </NavigationContainer>
     </StoreProvider>

@@ -11,7 +11,7 @@ import MainLayout from '../../component/Loyout/MainLayout';
 import {mood} from '../../data/mood';
 import LinearGradient from 'react-native-linear-gradient';
 
-const SelectedMoodTask = ({route}) => {
+const SelectedMoodTask = ({route, navigation}) => {
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
   const [isActive, setIsActive] = useState(false);
   const [isDone, setIsDone] = useState(false);
@@ -34,6 +34,10 @@ const SelectedMoodTask = ({route}) => {
 
   const startTimer = () => {
     setIsActive(true);
+  };
+
+  const handleDone = () => {
+    navigation.navigate('TrackMood');
   };
 
   const formatTime = seconds => {
@@ -82,27 +86,33 @@ const SelectedMoodTask = ({route}) => {
               <Text style={styles.timerText}>{formatTime(timeLeft)}</Text>
             </View>
             <Text style={styles.taskTitle}>
-              Daily Task for Self-Improvement:
+              {isDone ? 'Daily Quote:' : 'Daily Task for Self-Improvement:'}
             </Text>
-            <Text style={styles.taskDescription}>
-              {selectedAnimal?.dailyTask}
-            </Text>
+            {isDone ? (
+              <>
+                <Text style={styles.taskDescription}>
+                 " {selectedAnimal?.dailyQuote}
+                </Text>
+                <Text style={styles.author}>- {selectedAnimal?.author}</Text>
+              </>
+            ) : (
+              <Text style={styles.taskDescription}>
+                {selectedAnimal?.dailyTask}
+              </Text>
+            )}
           </View>
 
           <View style={styles.buttonGroup}>
             <Pressable
-              onPress={startTimer}
-              disabled={isActive || isDone}
+              onPress={isDone ? handleDone : startTimer}
+              disabled={isActive}
               style={({pressed}) => [
                 styles.startButton,
                 {transform: [{scale: pressed ? 0.95 : 1}]},
               ]}>
               <LinearGradient
                 colors={['#FF64FF', '#D45579']}
-                style={[
-                  styles.gradientButton,
-                  (isActive || isDone) && styles.disabledButton,
-                ]}>
+                style={[styles.gradientButton, isActive && styles.disabledButton]}>
                 <Text style={styles.buttonText}>{getButtonText()}</Text>
               </LinearGradient>
             </Pressable>
@@ -167,7 +177,6 @@ const styles = StyleSheet.create({
   },
   timerContainer: {
     flexDirection: 'row',
-
     backgroundColor: '#FFC1FF',
     paddingHorizontal: 15,
     paddingVertical: 8,
@@ -249,5 +258,12 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     opacity: 0.7,
+  },
+  author: {
+    fontSize: 14,
+    color: '#666',
+    fontStyle: 'italic',
+    textAlign: 'right',
+    marginTop: 10,
   },
 });
