@@ -7,6 +7,7 @@ const MoodLoading = ({route, navigation}) => {
   const progressAnim = useRef(new Animated.Value(0)).current;
   const selectedMoodId = route.params?.selectedMoodId;
   const selectedAnimal = mood.find(animal => animal.id === selectedMoodId);
+  console.log(selectedAnimal);
 
   useEffect(() => {
     // Animate progress bar
