@@ -20,7 +20,7 @@ const Mood = ({navigation}) => {
 
   const handleContinue = () => {
     navigation.replace('MoodLoading', {
-      selectedMoodId: selectedMood.id,
+      selectedMoodId: selectedMood,
     });
   };
 

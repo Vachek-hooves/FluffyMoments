@@ -5,7 +5,8 @@ import { mood } from '../../data/mood';
 
 const MoodLoading = ({ route, navigation }) => {
   const progressAnim = useRef(new Animated.Value(0)).current;
-  const selectedMood = mood.find(animal => animal.id === route.params?.selectedMoodId);
+  const selectedMoodId = route.params?.selectedMoodId;
+  const selectedAnimal = mood.find(animal => animal.id === selectedMoodId);
 
   useEffect(() => {
     // Animate progress bar
@@ -17,8 +18,10 @@ const MoodLoading = ({ route, navigation }) => {
 
     // Navigate after 1.5 seconds
     const timer = setTimeout(() => {
-      navigation.navigate('SelectedMoodTask');
-    }, 100500);
+      navigation.replace('SelectedMoodTask', {
+        selectedMoodId: selectedMoodId
+      });
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -32,12 +35,14 @@ const MoodLoading = ({ route, navigation }) => {
         />
         <Text style={styles.waitText}>Please wait...</Text>
         
-        <View style={styles.imageContainer}>
-          <Image
-            source={selectedMood?.image}
-            style={styles.animalImage}
-          />
-        </View>
+        {selectedAnimal && (
+          <View style={styles.imageContainer}>
+            <Image
+              source={selectedAnimal.image}
+              style={styles.animalImage}
+            />
+          </View>
+        )}
 
         <View style={styles.progressContainer}>
           <Animated.View 
