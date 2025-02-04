@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,7 +10,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import MainLayout from '../../component/Loyout/MainLayout';
 import {mood} from '../../data/mood';
-import { MoodLoading } from '../stack';
+import {MoodLoading} from '../stack';
 
 const Mood = ({navigation}) => {
   const [selectedMood, setSelectedMood] = useState(null);
@@ -19,12 +19,9 @@ const Mood = ({navigation}) => {
   const selectedAnimal = mood.find(animal => animal.id === selectedMood);
 
   const handleContinue = () => {
-
-    setIsLoading(true);
-    setTimeout(() => {
-      navigation.navigate('SelectedMoodTask');
-      setIsLoading(false);
-    }, 1500);
+    navigation.replace('MoodLoading', {
+      selectedMoodId: selectedMood.id,
+    });
   };
 
   if (isLoading) {
@@ -45,20 +42,19 @@ const Mood = ({navigation}) => {
           Select a companion to guide your day's journey
         </Text>
         <View style={styles.grid}>
-          {mood.map((animal) => (
+          {mood.map(animal => (
             <Pressable
               key={animal.id}
               onPress={() => setSelectedMood(animal.id)}
               style={({pressed}) => [
                 styles.animalCard,
-                selectedMood === animal.id ? styles.selectedCard : styles.normalCard,
+                selectedMood === animal.id
+                  ? styles.selectedCard
+                  : styles.normalCard,
                 {transform: [{scale: pressed ? 0.95 : 1}]},
               ]}>
               <View style={styles.imageContainer}>
-                <Image 
-                  source={animal.image}
-                  style={styles.animalImage} 
-                />
+                <Image source={animal.image} style={styles.animalImage} />
               </View>
               <Text style={styles.animalName}>{animal.name}</Text>
               <Text style={styles.animalTrait}>{animal.trait}</Text>
@@ -67,11 +63,11 @@ const Mood = ({navigation}) => {
         </View>
 
         {selectedMood && (
-          <Pressable 
+          <Pressable
             onPress={handleContinue}
             style={({pressed}) => [
               styles.pressable,
-              {transform: [{scale: pressed ? 0.95 : 1}]}
+              {transform: [{scale: pressed ? 0.95 : 1}]},
             ]}>
             <LinearGradient
               colors={['#FF64FF', '#D45579']}
