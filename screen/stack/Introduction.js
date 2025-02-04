@@ -73,8 +73,13 @@ const Introduction = () => {
               ))}
             </View>
             {currentSlideIndex < pages.length - 1 ? (
-              <Pressable onPress={goToNextSlide} >
-                  <LinearGradient 
+              <Pressable 
+                onPress={goToNextSlide}
+                style={({ pressed }) => [
+                  styles.pressable,
+                  { transform: [{ scale: pressed ? 0.95 : 1 }] }
+                ]}>
+                <LinearGradient
                   colors={['#FF64FF', '#D45579']}
                   style={styles.buttonContainer}>
                   <Text style={styles.buttonText}>
@@ -83,7 +88,12 @@ const Introduction = () => {
                 </LinearGradient>
               </Pressable>
             ) : (
-              <Pressable onPress={() => {/* Navigate to main app */}}>
+              <Pressable 
+                onPress={() => {/* Navigate to main app */}}
+                style={({ pressed }) => [
+                  styles.pressable,
+                  { transform: [{ scale: pressed ? 0.95 : 1 }] }
+                ]}>
                 <LinearGradient
                   colors={['#FF64FF', '#D45579']}
                   style={styles.buttonContainer}>
@@ -152,6 +162,10 @@ const styles = StyleSheet.create({
   },
   paginationDotActive: {
     backgroundColor: '#FF69B4',
+  },
+  pressable: {
+    width: 'auto',
+    height: 'auto',
   },
   buttonContainer: {
     borderRadius: 25,
