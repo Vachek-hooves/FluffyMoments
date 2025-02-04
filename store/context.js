@@ -1,6 +1,7 @@
 import { createContext,useState,useContext,useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const StoreContext = createContext();
+const StoreContext = createContext({isMusicEnable: () => {},
+setIsMusicEnable: () => {},});
 
 export default StoreContext;
 
@@ -8,6 +9,7 @@ export const StoreProvider = ({ children }) => {
     const [moodHistory, setMoodHistory] = useState([]);
     const [favoriteTasks, setFavoriteTasks] = useState([]);
     const [favoriteQuotes, setFavoriteQuotes] = useState([]);
+    const [isMusicEnabled, setIsMusicEnabled] = useState(false);
     console.log(favoriteQuotes)
     console.log(favoriteTasks)
 
@@ -125,6 +127,8 @@ export const StoreProvider = ({ children }) => {
         saveFavoriteTask,
         saveFavoriteQuote,
         isFavorite,
+        isMusicEnabled,
+        setIsMusicEnabled,
     };
     
     return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
