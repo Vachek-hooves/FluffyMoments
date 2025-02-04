@@ -73,13 +73,21 @@ const Introduction = () => {
               ))}
             </View>
             {currentSlideIndex < pages.length - 1 ? (
-              <Text style={styles.button} onPress={goToNextSlide}>
-                {pages[currentSlideIndex].btnText}
-              </Text>
+              <LinearGradient
+                colors={['#FF64FF', '#D45579']}
+                style={styles.buttonContainer}>
+                <Text style={styles.buttonText} onPress={goToNextSlide}>
+                  {pages[currentSlideIndex].btnText}
+                </Text>
+              </LinearGradient>
             ) : (
-              <Text style={styles.button} onPress={() => {/* Navigate to main app */}}>
-                {pages[currentSlideIndex].btnText}
-              </Text>
+              <LinearGradient
+                colors={['#FF64FF', '#D45579']}
+                style={styles.buttonContainer}>
+                <Text style={styles.buttonText} onPress={() => {/* Navigate to main app */}}>
+                  {pages[currentSlideIndex].btnText}
+                </Text>
+              </LinearGradient>
             )}
           </View>
         </ScrollView>
@@ -141,11 +149,12 @@ const styles = StyleSheet.create({
   paginationDotActive: {
     backgroundColor: '#FF69B4',
   },
-  button: {
-    backgroundColor: '#FF69B4',
+  buttonContainer: {
+    borderRadius: 25,
+  },
+  buttonText: {
     paddingHorizontal: 30,
     paddingVertical: 15,
-    borderRadius: 25,
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
