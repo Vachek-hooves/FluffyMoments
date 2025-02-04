@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Image, Animated } from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {StyleSheet, Text, View, Image, Animated} from 'react-native';
 import MainLayout from '../../component/Loyout/MainLayout';
-import { mood } from '../../data/mood';
+import {mood} from '../../data/mood';
 
-const MoodLoading = ({ route, navigation }) => {
+const MoodLoading = ({route, navigation}) => {
   const progressAnim = useRef(new Animated.Value(0)).current;
   const selectedMoodId = route.params?.selectedMoodId;
   const selectedAnimal = mood.find(animal => animal.id === selectedMoodId);
@@ -19,7 +19,7 @@ const MoodLoading = ({ route, navigation }) => {
     // Navigate after 1.5 seconds
     const timer = setTimeout(() => {
       navigation.replace('SelectedMoodTask', {
-        selectedMoodId: selectedMoodId
+        selectedMoodId: selectedMoodId,
       });
     }, 1500);
 
@@ -33,28 +33,25 @@ const MoodLoading = ({ route, navigation }) => {
           source={require('../../assets/image/appName/appName.png')}
           style={styles.appName}
         />
-        <Text style={styles.waitText}>Please wait...</Text>
-        
+        <Text style={styles.waitText}>Please wait ...</Text>
+
         {selectedAnimal && (
           <View style={styles.imageContainer}>
-            <Image
-              source={selectedAnimal.image}
-              style={styles.animalImage}
-            />
+            <Image source={selectedAnimal.image} style={styles.animalImage} />
           </View>
         )}
 
         <View style={styles.progressContainer}>
-          <Animated.View 
+          <Animated.View
             style={[
               styles.progressBar,
               {
                 width: progressAnim.interpolate({
                   inputRange: [0, 1],
-                  outputRange: ['0%', '100%']
-                })
-              }
-            ]} 
+                  outputRange: ['0%', '100%'],
+                }),
+              },
+            ]}
           />
         </View>
         <Text style={styles.loadingText}>Loading...</Text>
@@ -69,11 +66,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 40,
+    paddingTop: 80,
   },
   appName: {
-    width: '80%',
-    height: 60,
+    width: '100%',
+    height: 160,
     resizeMode: 'contain',
     marginBottom: 20,
   },
@@ -83,22 +80,25 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   imageContainer: {
-    width: 200,
-    height: 200,
-    marginBottom: 40,
+    width: 250,
+    height: 250,
+    marginVertical: 20,
+    // justifyContent: 'center',
+    alignItems: 'center',
   },
   animalImage: {
-    width: '100%',
-    height: '100%',
+    width: 300,
+    height: 300,
     resizeMode: 'contain',
   },
   progressContainer: {
-    width: '80%',
+    width: '70%',
     height: 12,
     backgroundColor: '#FFF',
     borderRadius: 4,
     overflow: 'hidden',
     marginBottom: 10,
+    marginTop: 50,
   },
   progressBar: {
     height: '100%',
