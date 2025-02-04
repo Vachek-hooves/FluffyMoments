@@ -1,14 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import MainLayout from '../../component/Loyout/MainLayout';
 
 const SelectedMoodTask = () => {
-  return (
-    <View>
-      <Text>SelectedMoodTask</Text>
-    </View>
-  )
-}
+  return <MainLayout></MainLayout>;
+};
 
-export default SelectedMoodTask
+export default SelectedMoodTask;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
