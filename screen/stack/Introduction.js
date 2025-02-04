@@ -4,7 +4,7 @@ import {
   View,
   ImageBackground,
   Image,
-  SafeAreaView,ScrollView
+  SafeAreaView,ScrollView, Pressable
 } from 'react-native';
 import {useState} from 'react';
 import MainLayout from '../../component/Loyout/MainLayout';
@@ -73,21 +73,25 @@ const Introduction = () => {
               ))}
             </View>
             {currentSlideIndex < pages.length - 1 ? (
-              <LinearGradient
-                colors={['#FF64FF', '#D45579']}
-                style={styles.buttonContainer}>
-                <Text style={styles.buttonText} onPress={goToNextSlide}>
-                  {pages[currentSlideIndex].btnText}
-                </Text>
-              </LinearGradient>
+              <Pressable onPress={goToNextSlide} >
+                  <LinearGradient 
+                  colors={['#FF64FF', '#D45579']}
+                  style={styles.buttonContainer}>
+                  <Text style={styles.buttonText}>
+                    {pages[currentSlideIndex].btnText}
+                  </Text>
+                </LinearGradient>
+              </Pressable>
             ) : (
-              <LinearGradient
-                colors={['#FF64FF', '#D45579']}
-                style={styles.buttonContainer}>
-                <Text style={styles.buttonText} onPress={() => {/* Navigate to main app */}}>
-                  {pages[currentSlideIndex].btnText}
-                </Text>
-              </LinearGradient>
+              <Pressable onPress={() => {/* Navigate to main app */}}>
+                <LinearGradient
+                  colors={['#FF64FF', '#D45579']}
+                  style={styles.buttonContainer}>
+                  <Text style={styles.buttonText}>
+                    {pages[currentSlideIndex].btnText}
+                  </Text>
+                </LinearGradient>
+              </Pressable>
             )}
           </View>
         </ScrollView>
@@ -151,6 +155,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     borderRadius: 25,
+    opacity: 1,
   },
   buttonText: {
     paddingHorizontal: 30,
@@ -158,5 +163,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
+    opacity: 1,
   },
 });
