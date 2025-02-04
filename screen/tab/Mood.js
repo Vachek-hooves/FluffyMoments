@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,6 +11,8 @@ import MainLayout from '../../component/Loyout/MainLayout';
 import {mood} from '../../data/mood';
 
 const Mood = () => {
+  const [selectedMood, setSelectedMood] = useState(null);
+
   return (
     <MainLayout>
       <ScrollView contentContainerStyle={styles.container}>
@@ -25,15 +27,20 @@ const Mood = () => {
           Select a companion to guide your day's journey
         </Text>
         <View style={styles.grid}>
-          {mood.map(animal => (
+          {mood.map((animal) => (
             <Pressable
               key={animal.id}
+              onPress={() => setSelectedMood(animal.id)}
               style={({pressed}) => [
                 styles.animalCard,
+                selectedMood === animal.id ? styles.selectedCard : styles.normalCard,
                 {transform: [{scale: pressed ? 0.95 : 1}]},
               ]}>
               <View style={styles.imageContainer}>
-                <Image source={animal.image} style={styles.animalImage} />
+                <Image 
+                  source={animal.image}
+                  style={styles.animalImage} 
+                />
               </View>
               <Text style={styles.animalName}>{animal.name}</Text>
               <Text style={styles.animalTrait}>{animal.trait}</Text>
@@ -73,12 +80,19 @@ const styles = StyleSheet.create({
   },
   animalCard: {
     width: '47%',
-    backgroundColor: '#FFC1FF',
     borderRadius: 20,
     padding: 15,
     alignItems: 'center',
-    borderTopWidth: 3,
-    borderTopColor: '#822E46',
+  },
+  normalCard: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#822E46',
+  },
+  selectedCard: {
+    backgroundColor: '#FFC1FF',
+    borderWidth: 3,
+    borderColor: '#822E46',
   },
   imageContainer: {
     width: 100,
