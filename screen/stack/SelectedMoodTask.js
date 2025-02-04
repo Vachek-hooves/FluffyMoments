@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,8 +12,43 @@ import {mood} from '../../data/mood';
 import LinearGradient from 'react-native-linear-gradient';
 
 const SelectedMoodTask = ({route}) => {
+  const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
+  const [isActive, setIsActive] = useState(false);
+  const [isDone, setIsDone] = useState(false);
+
   const selectedMoodId = route.params?.selectedMoodId;
   const selectedAnimal = mood.find(animal => animal.id === selectedMoodId);
+
+  useEffect(() => {
+    let interval = null;
+    if (isActive && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+    } else if (timeLeft === 0) {
+      setIsDone(true);
+      setIsActive(false);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, timeLeft]);
+
+  const startTimer = () => {
+    setIsActive(true);
+  };
+
+  const formatTime = seconds => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs
+      .toString()
+      .padStart(2, '0')}`;
+  };
+
+  const getButtonText = () => {
+    if (isDone) return 'Done';
+    if (isActive) return 'Wait for timer...';
+    return 'Start task';
+  };
 
   return (
     <MainLayout>
@@ -30,7 +65,12 @@ const SelectedMoodTask = ({route}) => {
           </Text>
 
           <View style={styles.progressBar}>
-            <View style={styles.progress} />
+            <View
+              style={[
+                styles.progress,
+                {width: isDone ? '100%' : `${(300 - timeLeft) / 3}%`},
+              ]}
+            />
           </View>
 
           <View style={styles.taskCard}>
@@ -39,7 +79,7 @@ const SelectedMoodTask = ({route}) => {
                 source={require('../../assets/image/icons/timer.png')}
                 style={styles.timerIcon}
               />
-              <Text style={styles.timerText}>05:00</Text>
+              <Text style={styles.timerText}>{formatTime(timeLeft)}</Text>
             </View>
             <Text style={styles.taskTitle}>
               Daily Task for Self-Improvement:
@@ -51,14 +91,19 @@ const SelectedMoodTask = ({route}) => {
 
           <View style={styles.buttonGroup}>
             <Pressable
+              onPress={startTimer}
+              disabled={isActive || isDone}
               style={({pressed}) => [
                 styles.startButton,
                 {transform: [{scale: pressed ? 0.95 : 1}]},
               ]}>
               <LinearGradient
                 colors={['#FF64FF', '#D45579']}
-                style={styles.gradientButton}>
-                <Text style={styles.buttonText}>Start task</Text>
+                style={[
+                  styles.gradientButton,
+                  (isActive || isDone) && styles.disabledButton,
+                ]}>
+                <Text style={styles.buttonText}>{getButtonText()}</Text>
               </LinearGradient>
             </Pressable>
 
@@ -115,14 +160,14 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   progress: {
-    width: '50%',
     height: '100%',
     backgroundColor: '#FF64FF',
     borderRadius: 4,
+    transition: 'width 0.3s ease',
   },
   timerContainer: {
     flexDirection: 'row',
-    
+
     backgroundColor: '#FFC1FF',
     paddingHorizontal: 15,
     paddingVertical: 8,
@@ -201,5 +246,8 @@ const styles = StyleSheet.create({
   icon: {
     width: 32,
     height: 32,
+  },
+  disabledButton: {
+    opacity: 0.7,
   },
 });
