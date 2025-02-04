@@ -36,7 +36,7 @@ const pages = [
   },
 ];
 
-const Introduction = () => {
+const Introduction = ({navigation}) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   const goToNextSlide = () => {
@@ -89,7 +89,7 @@ const Introduction = () => {
               </Pressable>
             ) : (
               <Pressable 
-                onPress={() => {/* Navigate to main app */}}
+                onPress={() =>navigation.navigate('TabMenuNav')}
                 style={({ pressed }) => [
                   styles.pressable,
                   { transform: [{ scale: pressed ? 0.95 : 1 }] }
