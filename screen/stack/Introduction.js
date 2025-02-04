@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     color:'#80213C'
   },
   description: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#666',
     textAlign: 'center',
     marginBottom: 30,
