@@ -50,8 +50,8 @@ const Saves = () => {
       <Text style={styles.cardText}>{quote.quote}</Text>
       <Text style={styles.author}>- {quote.author}</Text>
       <View style={styles.cardActions}>
-        {/* <Pressable onPress={() => handleToggleBookmark(quote, 'quote')}> */}
-        <Pressable>
+        <Pressable onPress={() => handleToggleBookmark(quote, 'quote')}>
+        {/* <Pressable> */}
           <Image
             source={require('../../assets/image/icons/bookmark.png')}
             style={[styles.actionIcon, styles.bookmarked]}
