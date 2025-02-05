@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     overflow: 'hidden',
     marginBottom: 10,
-    marginTop: 50,
+    marginTop: 70,
   },
   progressBar: {
     height: '100%',
