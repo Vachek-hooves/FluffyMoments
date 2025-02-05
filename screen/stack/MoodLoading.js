@@ -78,11 +78,11 @@ const styles = StyleSheet.create({
   waitText: {
     fontSize: 20,
     color: '#80213C',
-    marginBottom: 40,
+    marginBottom: 10,
   },
   imageContainer: {
     width: 250,
-    height: 250,
+    height: 200,
     marginVertical: 20,
     // justifyContent: 'center',
     alignItems: 'center',

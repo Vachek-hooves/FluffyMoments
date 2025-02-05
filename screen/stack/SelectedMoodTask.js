@@ -14,7 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useAppContext} from '../../store/context';
 
 const SelectedMoodTask = ({route, navigation}) => {
-  const [timeLeft, setTimeLeft] = useState(30); // 5 minutes in seconds
+  const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
   const [isActive, setIsActive] = useState(false);
   const [isDone, setIsDone] = useState(false);
   const {saveFavoriteTask, saveFavoriteQuote, isFavorite} = useAppContext();
@@ -246,6 +246,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
+    minWidth: 110,
   },
   timerIcon: {
     width: 30,
