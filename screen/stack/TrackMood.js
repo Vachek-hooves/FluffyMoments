@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  Alert,
 } from 'react-native';
 import MainLayout from '../../component/Loyout/MainLayout';
 import LinearGradient from 'react-native-linear-gradient';
@@ -29,6 +30,15 @@ const TrackMood = ({route, navigation}) => {
   ];
 
   const handleSave = async () => {
+    if (!selectedMood) {
+      Alert.alert(
+        "Mood Not Selected",
+        "Please select how you're feeling before saving.",
+        [{ text: "OK", style: "default" }]
+      );
+      return;
+    }
+
     const moodData = {
       animal: selectedAnimal,
       completedAt: completedAt,
@@ -94,13 +104,15 @@ const TrackMood = ({route, navigation}) => {
 
             <Pressable
               onPress={handleSave}
+              disabled={!selectedMood}
               style={({pressed}) => [
                 styles.pressable,
                 {transform: [{scale: pressed ? 0.95 : 1}]},
+                !selectedMood && styles.disabledButton,
               ]}>
               <LinearGradient
                 colors={['#FF64FF', '#D45579']}
-                style={styles.saveButton}>
+                style={[styles.saveButton, !selectedMood && styles.disabledGradient]}>
                 <Text style={styles.saveButtonText}>Save and exit</Text>
               </LinearGradient>
             </Pressable>
@@ -181,5 +193,11 @@ saveButtonText: {
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  disabledButton: {
+    opacity: 0.5,
+  },
+  disabledGradient: {
+    opacity: 0.7,
   },
 });

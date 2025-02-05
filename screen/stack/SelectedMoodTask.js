@@ -6,7 +6,7 @@ import {
   Image,
   Pressable,
   ScrollView,
-  Vibration,
+  Vibration,Share
 } from 'react-native';
 import MainLayout from '../../component/Loyout/MainLayout';
 import {mood} from '../../data/mood';
@@ -106,6 +106,13 @@ const SelectedMoodTask = ({route, navigation}) => {
     return 'Start task';
   };
 
+  const handleShare = () => {
+    const message = `Check out this quote from ${selectedAnimal?.name}: "${selectedAnimal?.dailyQuote}" - ${selectedAnimal?.author}`;
+    Share.share({
+      message,
+    });
+  };
+
   return (
     <MainLayout>
       <ScrollView>
@@ -184,7 +191,7 @@ const SelectedMoodTask = ({route, navigation}) => {
                   style={[styles.icon, isBookmarked && styles.bookmarkedIcon]}
                 />
               </Pressable>
-              <Pressable style={styles.iconButton}>
+              <Pressable style={styles.iconButton} onPress={handleShare}>
                 <Image
                   source={require('../../assets/image/icons/share.png')}
                   style={styles.icon}
