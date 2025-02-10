@@ -2,11 +2,11 @@ import {Image, StyleSheet, Text, View, ImageBackground} from 'react-native';
 import {useEffect} from 'react';
 
 const Welcome = ({navigation}) => {
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     navigation.navigate('Introduction');
-  //   }, 1500);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.navigate('Introduction');
+    }, 1500);
+  }, []);
 
   return (
     <ImageBackground
