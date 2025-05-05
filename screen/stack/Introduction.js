@@ -57,7 +57,7 @@ const Introduction = ({navigation}) => {
       <ScrollView
         // style={styles.container}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{flex: 1, paddingTop: 20}}>
+        contentContainerStyle={{flexGrow: 1, paddingTop: 20}}>
         <Image
           source={require('../../assets/image/logo/logo.png')}
           style={styles.logo}
@@ -109,7 +109,7 @@ const Introduction = ({navigation}) => {
               </LinearGradient>
             </Pressable>
           )}
-      <View style={{height: 30}} />
+          <View style={{height: 30}} />
         </View>
       </ScrollView>
       {/* </SafeAreaView> */}

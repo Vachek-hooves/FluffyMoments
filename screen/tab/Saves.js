@@ -111,8 +111,8 @@ const Saves = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    paddingTop: 60,
+    padding: 15,
+    paddingTop: 5,
   },
   title: {
     fontSize: 24,
@@ -121,11 +121,11 @@ const styles = StyleSheet.create({
   },
   tabContainer: {
     flexDirection: 'row',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   tab: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: 5,
     borderBottomWidth: 2,
     borderBottomColor: '#E0E0E0',
   },
