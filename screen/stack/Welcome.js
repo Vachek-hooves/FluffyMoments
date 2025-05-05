@@ -4,7 +4,7 @@ import {useEffect} from 'react';
 const Welcome = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('Introduction');
+      navigation.replace('Introduction');
     }, 1500);
   }, []);
 
