@@ -68,7 +68,7 @@ const TabMenuNav = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Sound"
         component={Sound}
         options={{
@@ -82,7 +82,7 @@ const TabMenuNav = () => {
             />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };
